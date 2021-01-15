@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
-import { Form } from './shared/form/Form';
-import { Input } from './shared/input/Input';
-import { Select } from './shared/select/Select';
-import { outlay } from '../utils/selectOptions';
+import CardIncome from './cardIncome/CardIncome';
+import CardSpendings from './cardSpendings/CardSpendings';
+import Home from './home/Home';
 export default class App extends Component {
   state = {
-    date: '',
-    time: '',
-    outlay: '',
-    total: '',
+    incomeIsOpen: false,
+    spendIsOpen: false,
+    homeIsOpen: true,
+    spendData: [],
   };
-  onHandleChange = e => {
-    const { name, value } = e.target;
-    console.log(e.target);
-    this.setState({ [name]: value });
+  toggleSpendings = () => {
+    this.setState(prevState => ({
+      spendIsOpen: !prevState.spendIsOpen,
+      homeIsOpen: !prevState.homeIsOpen,
+    }));
+  };
+  onHandleSubmit = data => {
+    this.setState(prevState => ({ spendData: [...prevState.spendData, data] }));
+    this.toggleSpendings();
   };
   render() {
-    console.log(this.state);
+    const { incomeIsOpen, spendIsOpen, homeIsOpen } = this.state;
     return (
-      <div>
-        <Form>
-          <Input title="День" onChange={this.onHandleChange} type="date" value={this.state.date} name="date" />
-          <Input title="Время" onChange={this.onHandleChange} type="time" value={this.state.time} name="time" />
-          <Select onChange={this.onHandleChange} sets={outlay} />
-          <Input title="Сумма" onChange={this.onHandleChange} type="text" value={this.state.total} placeholder="Введите сумму" name="total" />
-        </Form>
-      </div>
+      <>
+        {homeIsOpen && <Home onToggleSpendings={this.toggleSpendings} />}
+        {spendIsOpen && <CardSpendings onToggleSpendings={this.toggleSpendings} onHandleSubmit={this.onHandleSubmit} />}
+        {incomeIsOpen && <CardIncome />}
+      </>
     );
   }
 }
