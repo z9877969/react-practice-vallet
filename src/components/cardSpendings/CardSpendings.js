@@ -7,6 +7,7 @@ import moment from 'moment';
 import CardTitle from '../shared/cardTitle/CardTitle';
 export default class CardSpendings extends Component {
   state = {
+    cardId: 'spending',
     date: moment(Date.now()).format('YYYY-MM-DD'),
     time: moment(Date.now()).format('HH:mm'),
     outlay: '',
@@ -28,7 +29,9 @@ export default class CardSpendings extends Component {
   };
   onFormSubmit = e => {
     e.preventDefault();
-    this.props.onHandleSubmit({ ...this.state });
+    const { cardId, ...data } = this.state;
+    console.log(cardId, data);
+    this.props.onHandleSubmit({ key: cardId, data });
     this.resetState();
   };
   render() {
