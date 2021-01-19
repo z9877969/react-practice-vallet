@@ -10,17 +10,17 @@ export default class CardSpendings extends Component {
     cardId: 'spending',
     date: moment(Date.now()).format('YYYY-MM-DD'),
     time: moment(Date.now()).format('HH:mm'),
-    outlay: '',
+    outlay: outlay.options[0].value,
     total: '',
-    currency: '',
+    currency: currency.options[0].value,
   };
   resetState = () => {
     this.setState({
       date: moment(Date.now()).format('YYYY-MM-DD'),
       time: moment(Date.now()).format('HH:mm'),
-      outlay: '',
+      outlay: outlay.options[0].value,
       total: '',
-      currency: '',
+      currency: currency.options[0].value,
     });
   };
   onHandleChange = e => {
@@ -42,7 +42,7 @@ export default class CardSpendings extends Component {
           <CardTitle title="Расходы" onToggleCard={this.props.onToggleSpendings} />
           <Input title="День" onChange={this.onHandleChange} type="date" value={this.state.date} name="date" />
           <Input title="Время" onChange={this.onHandleChange} type="time" value={this.state.time} name="time" />
-          <Select onChange={this.onHandleChange} sets={outlay} />
+          <Select value={this.state.outlay} onChange={this.onHandleChange} sets={outlay} />
           <Input title="Сумма" onChange={this.onHandleChange} type="text" value={this.state.total} placeholder="Введите сумму" name="total" />
           <Select onChange={this.onHandleChange} sets={currency} />
         </Form>

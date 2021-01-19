@@ -10,17 +10,17 @@ export default class CardIncome extends Component {
     cardId: 'income',
     date: moment(Date.now()).format('YYYY-MM-DD'),
     time: moment(Date.now()).format('HH:mm'),
-    income: '',
+    income: income.options[0].value,
     total: '',
-    currency: '',
+    currency: currency.options[0].value,
   };
   resetState = () => {
     this.setState({
       date: moment(Date.now()).format('YYYY-MM-DD'),
       time: moment(Date.now()).format('HH:mm'),
-      income: '',
+      income: income.options[0].value,
       total: '',
-      currency: '',
+      currency: currency.options[0].value,
     });
   };
   onHandleChange = e => {

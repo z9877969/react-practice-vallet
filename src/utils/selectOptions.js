@@ -52,3 +52,24 @@ export const currency = {
     },
   ],
 };
+export const spendingList = {
+  name: 'spendingList',
+  options: [
+    {
+      value: 'day',
+      title: 'День',
+    },
+    {
+      value: 'week',
+      title: 'Неделя',
+    },
+    {
+      value: 'month',
+      title: 'Месяц',
+    },
+    {
+      value: 'year',
+      title: 'Год',
+    },
+  ],
+};

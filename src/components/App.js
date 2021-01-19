@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CardIncome from './cardIncome/CardIncome';
 import CardSpendings from './cardSpendings/CardSpendings';
 import Home from './home/Home';
+import SpendingList from './spendingList/SpendingList';
 export default class App extends Component {
   state = {
     incomeIsOpen: false,
@@ -56,6 +57,7 @@ export default class App extends Component {
         {homeIsOpen && <Home onToggleSpendings={this.toggleSpendings} onToggleIncome={this.toggleIncome} spending={spendData} income={incomeData} />}
         {spendIsOpen && <CardSpendings onToggleSpendings={this.toggleSpendings} onHandleSubmit={this.onHandleSubmit} />}
         {incomeIsOpen && <CardIncome onToggleIncome={this.toggleIncome} onHandleSubmit={this.onHandleSubmit} />}
+        <SpendingList spendData={spendData} />
       </>
     );
   }
