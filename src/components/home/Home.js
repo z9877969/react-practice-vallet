@@ -4,7 +4,7 @@ import CountTotal from '../../utils/countTotal';
 import Section from '../shared/section/Section';
 const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
   const counter = new CountTotal();
-
+  console.log('spending', spending);
   return (
     <Section>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>

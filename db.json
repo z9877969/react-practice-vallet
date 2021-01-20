@@ -1,0 +1,62 @@
+{
+  "spending": [
+    {
+      "date": "2021-01-20",
+      "time": "14:44",
+      "outlay": "food",
+      "total": "123",
+      "currency": "rub",
+      "id": 1
+    },
+    {
+      "date": "2021-01-20",
+      "time": "15:14",
+      "outlay": "beverages",
+      "total": "1234",
+      "currency": "rub",
+      "id": 2
+    },
+    {
+      "date": "2021-01-20",
+      "time": "15:14",
+      "outlay": "clothes",
+      "total": "545",
+      "currency": "rub",
+      "id": 3
+    },
+    {
+      "date": "2021-01-19",
+      "time": "15:14",
+      "outlay": "food",
+      "total": "123",
+      "currency": "rub",
+      "id": 4
+    },
+    {
+      "date": "2021-01-08",
+      "time": "15:14",
+      "outlay": "food",
+      "total": "1234",
+      "currency": "rub",
+      "id": 5
+    }
+  ],
+  "income": [
+    {
+      "date": "2021-01-20",
+      "time": "14:45",
+      "income": "salary",
+      "total": "1234",
+      "currency": "rub",
+      "id": 1
+    },
+    {
+      "date": "2021-01-20",
+      "time": "15:14",
+      "income": "lottery",
+      "total": "123",
+      "currency": "rub",
+      "id": 2
+    }
+  ]
+}

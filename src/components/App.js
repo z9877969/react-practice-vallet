@@ -3,6 +3,7 @@ import CardIncome from './cardIncome/CardIncome';
 import CardSpendings from './cardSpendings/CardSpendings';
 import Home from './home/Home';
 import SpendingList from './spendingList/SpendingList';
+import ApiServicesClass from '../services/apiServicesClass';
 export default class App extends Component {
   state = {
     incomeIsOpen: false,
@@ -11,24 +12,18 @@ export default class App extends Component {
     spendData: [],
     incomeData: [],
   };
-  componentDidMount() {
-    const spending = localStorage.getItem('spending');
-    const income = localStorage.getItem('income');
+  api = new ApiServicesClass();
+  async componentDidMount() {
+    const spending = await this.api.getSpending();
+    const income = await this.api.getIncome();
     if (spending) {
-      this.setState({ spendData: JSON.parse(spending) });
+      this.setState({ spendData: spending });
     }
     if (income) {
-      this.setState({ incomeData: JSON.parse(income) });
+      this.setState({ incomeData: income });
     }
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.spendData !== this.state.spendData) {
-      localStorage.setItem('spending', JSON.stringify(this.state.spendData));
-    }
-    if (prevState.incomeData !== this.state.incomeData) {
-      localStorage.setItem('income', JSON.stringify(this.state.incomeData));
-    }
-  }
+
   toggleSpendings = () => {
     this.setState(prevState => ({
       spendIsOpen: !prevState.spendIsOpen,
@@ -41,12 +36,13 @@ export default class App extends Component {
       homeIsOpen: !prevState.homeIsOpen,
     }));
   };
-  onHandleSubmit = ({ key, data }) => {
+  onHandleSubmit = async ({ key, data }) => {
+    const responseData = await this.api.post(key, data);
     if (key === 'spending') {
-      this.setState(prevState => ({ spendData: [...prevState.spendData, data] }));
+      this.setState(prevState => ({ spendData: [...prevState.spendData, responseData] }));
       this.toggleSpendings();
     } else if (key === 'income') {
-      this.setState(prevState => ({ incomeData: [...prevState.incomeData, data] }));
+      this.setState(prevState => ({ incomeData: [...prevState.incomeData, responseData] }));
       this.toggleIncome();
     }
   };
@@ -57,7 +53,7 @@ export default class App extends Component {
         {homeIsOpen && <Home onToggleSpendings={this.toggleSpendings} onToggleIncome={this.toggleIncome} spending={spendData} income={incomeData} />}
         {spendIsOpen && <CardSpendings onToggleSpendings={this.toggleSpendings} onHandleSubmit={this.onHandleSubmit} />}
         {incomeIsOpen && <CardIncome onToggleIncome={this.toggleIncome} onHandleSubmit={this.onHandleSubmit} />}
-        <SpendingList spendData={spendData} />
+        {spendData.length > 0 && <SpendingList spendData={spendData} />}
       </>
     );
   }
