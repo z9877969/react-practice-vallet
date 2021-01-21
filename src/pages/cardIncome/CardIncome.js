@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Form } from '../shared/form/Form';
-import { Input } from '../shared/input/Input';
-import { Select } from '../shared/select/Select';
-import { outlay, currency } from '../../utils/selectOptions';
+import { Form } from '../../components/shared/form/Form';
+import { Input } from '../../components/shared/input/Input';
+import { Select } from '../../components/shared/select/Select';
+import { income, currency } from '../../utils/selectOptions';
 import moment from 'moment';
-import CardTitle from '../shared/cardTitle/CardTitle';
-export default class CardSpendings extends Component {
+import CardTitle from '../../components/shared/cardTitle/CardTitle';
+export default class CardIncome extends Component {
   state = {
-    cardId: 'spending',
+    cardId: 'income',
     date: moment(Date.now()).format('YYYY-MM-DD'),
     time: moment(Date.now()).format('HH:mm'),
-    outlay: outlay.options[0].value,
+    income: income.options[0].value,
     total: '',
     currency: currency.options[0].value,
   };
@@ -18,11 +18,12 @@ export default class CardSpendings extends Component {
     this.setState({
       date: moment(Date.now()).format('YYYY-MM-DD'),
       time: moment(Date.now()).format('HH:mm'),
-      outlay: outlay.options[0].value,
+      income: income.options[0].value,
       total: '',
       currency: currency.options[0].value,
     });
   };
+
   onHandleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -33,16 +34,17 @@ export default class CardSpendings extends Component {
     console.log(cardId, data);
     this.props.onHandleSubmit({ key: cardId, data });
     this.resetState();
+    this.props.history.push({ pathname: '/' });
   };
   render() {
     console.log(this.state);
     return (
       <div>
         <Form onHandleSubmit={this.onFormSubmit}>
-          <CardTitle title="Расходы" onToggleCard={this.props.onToggleSpendings} />
+          <CardTitle title="Доходы" onToggleCard={this.props.onToggleIncome} />
           <Input title="День" onChange={this.onHandleChange} type="date" value={this.state.date} name="date" />
           <Input title="Время" onChange={this.onHandleChange} type="time" value={this.state.time} name="time" />
-          <Select value={this.state.outlay} onChange={this.onHandleChange} sets={outlay} />
+          <Select onChange={this.onHandleChange} sets={income} />
           <Input title="Сумма" onChange={this.onHandleChange} type="text" value={this.state.total} placeholder="Введите сумму" name="total" />
           <Select onChange={this.onHandleChange} sets={currency} />
         </Form>

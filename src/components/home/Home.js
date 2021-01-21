@@ -1,7 +1,9 @@
 import React from 'react';
-import CountTotal from '../../utils/countTotal';
+import { NavLink } from 'react-router-dom';
 
+import CountTotal from '../../utils/countTotal';
 import Section from '../shared/section/Section';
+
 const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
   const counter = new CountTotal();
   console.log('spending', spending);
@@ -15,9 +17,7 @@ const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
           <li>Неделя: {counter.countWeekTotal(spending)}</li>
           <li>Месяц: {counter.countMonthTotal(spending)}</li>
         </ul>
-        <button type="button" onClick={onToggleSpendings}>
-          +
-        </button>
+        <NavLink to="/spending">+</NavLink>
       </div>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
         <h2>Доходы</h2>
@@ -25,9 +25,11 @@ const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
         <ul>
           <li>Месяц: {counter.countMonthTotal(income)}</li>
         </ul>
-        <button type="button" onClick={onToggleIncome}>
-          +
-        </button>
+        <NavLink to="/income">+</NavLink>
+      </div>
+      <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
+        <NavLink to="/list/income">Все доходы</NavLink>
+        <NavLink to="/list/outlay">Все расходы</NavLink>
       </div>
     </Section>
   );

@@ -1,8 +1,12 @@
 import React from 'react';
-const CardTitle = ({ title, onToggleCard }) => {
+import { withRouter } from 'react-router-dom';
+const CardTitle = ({ title, onToggleCard, history }) => {
+  const goBackHome = () => {
+    history.push('/');
+  };
   return (
     <header style={{ border: '1px solid navy', display: 'flex' }}>
-      <button type="button" onClick={onToggleCard}>
+      <button type="button" onClick={goBackHome}>
         Go back
       </button>
       <h2>{title}</h2>
@@ -11,4 +15,4 @@ const CardTitle = ({ title, onToggleCard }) => {
   );
 };
 
-export default CardTitle;
+export default withRouter(CardTitle);
