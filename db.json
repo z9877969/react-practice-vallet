@@ -63,6 +63,30 @@
       "total": "333",
       "currency": "rub",
       "id": 8
+    },
+    {
+      "date": "2021-01-26",
+      "time": "17:57",
+      "outlay": "beverages",
+      "total": "323",
+      "currency": "rub",
+      "id": 9
+    },
+    {
+      "date": "2021-01-27",
+      "time": "18:58",
+      "outlay": "clothes",
+      "total": "432",
+      "currency": "usd",
+      "id": 10
+    },
+    {
+      "date": "2021-01-25",
+      "time": "16:22",
+      "outlay": "food",
+      "total": "12345",
+      "currency": "rub",
+      "id": 11
     }
   ],
   "income": [
@@ -89,6 +113,22 @@
       "total": "1234",
       "currency": "rub",
       "id": 3
+    },
+    {
+      "date": "2021-01-26",
+      "time": "17:02",
+      "income": "deposit",
+      "total": "12345",
+      "currency": "rub",
+      "id": 4
+    },
+    {
+      "date": "2021-01-25",
+      "time": "16:22",
+      "income": "salary",
+      "total": "3232",
+      "currency": "rub",
+      "id": 5
     }
   ]
 }

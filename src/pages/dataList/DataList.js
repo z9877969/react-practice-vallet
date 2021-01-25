@@ -1,32 +1,22 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import moment from 'moment';
 import Button from '../../components/shared/button/Button';
 import Section from '../../components/shared/section/Section';
 import { Select } from '../../components/shared/select/Select';
 import { spendingList } from '../../utils/selectOptions';
 import { Input } from '../../components/shared/input/Input';
-import moment from 'moment';
-const SpendingList = ({ spendData, incomeData, match, history }) => {
+import { categoryResult } from '../../utils/helpers';
+
+const DataList = ({ spendData, incomeData }) => {
+  const history = useHistory();
+  const match = useRouteMatch();
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
   const onHandleDate = e => {
     setDate(e.target.value);
   };
   const goBack = () => history.push('/');
 
-  const categoryResult = (data, cat) => {
-    const uniqueCategory = data.map(item => item[cat]).filter((el, index, array) => array.indexOf(el) === index);
-    console.log(uniqueCategory);
-    return uniqueCategory
-      .map(category =>
-        data
-          .filter(el => el[cat] === category)
-          .reduce((acc, obj) => {
-            const total = Number(obj.total);
-            return { category, total: acc.total ? acc.total + total : total };
-          }, {}),
-      )
-      .filter(category => category.total > 0);
-  };
   const { category } = match.params;
   const categoriesList =
     category === 'income' ? categoryResult(incomeData, category) : category === 'outlay' ? categoryResult(spendData, category) : null;
@@ -52,4 +42,4 @@ const SpendingList = ({ spendData, incomeData, match, history }) => {
   );
 };
 
-export default withRouter(SpendingList);
+export default DataList;

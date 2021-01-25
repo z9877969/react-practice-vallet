@@ -1,53 +1,56 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Form } from '../../components/shared/form/Form';
 import { Input } from '../../components/shared/input/Input';
 import { Select } from '../../components/shared/select/Select';
-import { outlay, currency } from '../../utils/selectOptions';
+import { outlaySets, currencySets } from '../../utils/selectOptions';
 import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
-export default class CardSpendings extends Component {
-  state = {
-    cardId: 'spending',
-    date: moment(Date.now()).format('YYYY-MM-DD'),
-    time: moment(Date.now()).format('HH:mm'),
-    outlay: outlay.options[0].value,
-    total: '',
-    currency: currency.options[0].value,
-  };
-  resetState = () => {
-    this.setState({
-      date: moment(Date.now()).format('YYYY-MM-DD'),
-      time: moment(Date.now()).format('HH:mm'),
-      outlay: outlay.options[0].value,
-      total: '',
-      currency: currency.options[0].value,
-    });
-  };
-  onHandleChange = e => {
+import { useHistory } from 'react-router-dom';
+
+const CardSpendings = ({ onHandleSubmit }) => {
+  const history = useHistory();
+  const cardId = 'spending';
+  const [date, setDate] = useState(moment(Date.now()).format('YYYY-MM-DD'));
+  const [time, setTime] = useState(moment(Date.now()).format('HH:mm'));
+  const [outlay, setOutlay] = useState(outlaySets.options[0].value);
+  const [total, setTotal] = useState('');
+  const [currency, setCurrency] = useState(currencySets.options[0].value);
+
+  const onHandleChange = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    switch (name) {
+      case 'date':
+        return setDate(value);
+      case 'time':
+        return setTime(value);
+      case 'total':
+        return setTotal(value);
+      case 'outlay':
+        return setOutlay(value);
+      case 'currency':
+        return setCurrency(value);
+      default:
+        return;
+    }
   };
-  onFormSubmit = e => {
+  const onFormSubmit = e => {
     e.preventDefault();
-    const { cardId, ...data } = this.state;
-    console.log(cardId, data);
-    this.props.onHandleSubmit({ key: cardId, data });
-    this.resetState();
-    this.props.history.push({ pathname: '/' });
+    const data = { date, time, outlay, total, currency };
+    onHandleSubmit({ key: cardId, data });
+    history.push({ pathname: '/' });
   };
-  render() {
-    console.log(this.state);
-    return (
-      <div>
-        <Form onHandleSubmit={this.onFormSubmit}>
-          <CardTitle title="Расходы" onToggleCard={this.props.onToggleSpendings} />
-          <Input title="День" onChange={this.onHandleChange} type="date" value={this.state.date} name="date" />
-          <Input title="Время" onChange={this.onHandleChange} type="time" value={this.state.time} name="time" />
-          <Select value={this.state.outlay} onChange={this.onHandleChange} sets={outlay} />
-          <Input title="Сумма" onChange={this.onHandleChange} type="text" value={this.state.total} placeholder="Введите сумму" name="total" />
-          <Select onChange={this.onHandleChange} sets={currency} />
-        </Form>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div>
+      <Form onHandleSubmit={onFormSubmit}>
+        <CardTitle title="Расходы" />
+        <Input title="День" onChange={onHandleChange} type="date" value={date} name="date" />
+        <Input title="Время" onChange={onHandleChange} type="time" value={time} name="time" />
+        <Select value={outlay} onChange={onHandleChange} sets={outlaySets} />
+        <Input title="Сумма" onChange={onHandleChange} type="text" value={total} placeholder="Введите сумму" name="total" />
+        <Select onChange={onHandleChange} sets={currencySets} />
+      </Form>
+    </div>
+  );
+};
+export default CardSpendings;

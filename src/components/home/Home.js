@@ -1,12 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import CountTotal from '../../utils/countTotal';
+import Button from '../shared/button/Button';
 import Section from '../shared/section/Section';
 
-const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
+const Home = ({ spending, income }) => {
+  const history = useHistory();
   const counter = new CountTotal();
-  console.log('spending', spending);
+  const goToSpending = () => history.push('/spending');
+  const goToIncome = () => history.push('/income');
+  const goToListIncome = () => history.push('/list/income');
+  const goToListOutlay = () => history.push('/list/outlay');
+
   return (
     <Section>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
@@ -17,7 +23,7 @@ const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
           <li>Неделя: {counter.countWeekTotal(spending)}</li>
           <li>Месяц: {counter.countMonthTotal(spending)}</li>
         </ul>
-        <NavLink to="/spending">+</NavLink>
+        <Button onClick={goToSpending} title="+" />
       </div>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
         <h2>Доходы</h2>
@@ -25,11 +31,11 @@ const Home = ({ onToggleSpendings, onToggleIncome, spending, income }) => {
         <ul>
           <li>Месяц: {counter.countMonthTotal(income)}</li>
         </ul>
-        <NavLink to="/income">+</NavLink>
+        <Button onClick={goToIncome} title="+" />
       </div>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
-        <NavLink to="/list/income">Все доходы</NavLink>
-        <NavLink to="/list/outlay">Все расходы</NavLink>
+        <Button onClick={goToListIncome} title="Все доходы" />
+        <Button onClick={goToListOutlay} title="Все расходы" />
       </div>
     </Section>
   );

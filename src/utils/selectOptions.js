@@ -1,4 +1,4 @@
-export const outlay = {
+export const outlaySets = {
   title: 'Категория расходов',
   name: 'outlay',
   options: [
@@ -16,7 +16,7 @@ export const outlay = {
     },
   ],
 };
-export const income = {
+export const incomeSets = {
   title: 'Категория доходов',
   name: 'income',
   options: [
@@ -34,7 +34,7 @@ export const income = {
     },
   ],
 };
-export const currency = {
+export const currencySets = {
   title: 'Валюта',
   name: 'currency',
   options: [
