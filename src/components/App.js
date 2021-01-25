@@ -1,44 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 import CardIncome from '../pages/cardIncome/CardIncome';
 import CardSpendings from '../pages/cardSpendings/CardSpendings';
 import Home from './home/Home';
 import DataList from '../pages/dataList/DataList';
-import ApiServicesClass from '../services/apiServicesClass';
+
 import RouteWrapper from './routeWrapper/RouteWrapper';
-
+import { useStore } from './storeProvider/StoreProvider';
 const App = () => {
-  const [spendData, setSpendData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
-  const [error, setError] = useState(null);
-  const api = new ApiServicesClass();
-  useEffect(() => {
-    api
-      .getSpending()
-      .then(result => setSpendData(result))
-      .catch(error => {
-        console.log(error);
-        setError(error);
-      });
-    api
-      .getIncome()
-      .then(result => setIncomeData(result))
-      .catch(error => {
-        console.log(error);
-        setError(error);
-      });
-    // eslint-disable-next-line
-  }, []);
-
-  const onHandleSubmit = async ({ key, data }) => {
-    const responseData = await api.post(key, data);
-    if (key === 'spending') {
-      setSpendData(prevState => [...prevState, responseData]);
-    } else if (key === 'income') {
-      setIncomeData(prevState => [...prevState, responseData]);
-    }
-  };
-
+  const { error } = useStore();
   return (
     <>
       {error ? (
@@ -46,19 +15,19 @@ const App = () => {
       ) : (
         <Switch>
           <RouteWrapper path="/" exact>
-            <Home spending={spendData} income={incomeData} />
+            <Home />
           </RouteWrapper>
 
           <RouteWrapper path="/spending">
-            <CardSpendings onHandleSubmit={onHandleSubmit} />
+            <CardSpendings />
           </RouteWrapper>
 
           <RouteWrapper path="/income">
-            <CardIncome onHandleSubmit={onHandleSubmit} />
+            <CardIncome />
           </RouteWrapper>
 
           <RouteWrapper path="/list/:category">
-            <DataList spendData={spendData} incomeData={incomeData} />
+            <DataList />
           </RouteWrapper>
 
           <Redirect to="/" />

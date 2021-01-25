@@ -7,16 +7,17 @@ import { Select } from '../../components/shared/select/Select';
 import { spendingList } from '../../utils/selectOptions';
 import { Input } from '../../components/shared/input/Input';
 import { categoryResult } from '../../utils/helpers';
+import { useStore } from '../../components/storeProvider/StoreProvider';
 
-const DataList = ({ spendData, incomeData }) => {
+const DataList = () => {
   const history = useHistory();
   const match = useRouteMatch();
+  const { spendData, incomeData } = useStore();
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
   const onHandleDate = e => {
     setDate(e.target.value);
   };
   const goBack = () => history.push('/');
-
   const { category } = match.params;
   const categoriesList =
     category === 'income' ? categoryResult(incomeData, category) : category === 'outlay' ? categoryResult(spendData, category) : null;

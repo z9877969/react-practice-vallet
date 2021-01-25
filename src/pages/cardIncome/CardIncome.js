@@ -6,8 +6,9 @@ import { incomeSets, currencySets } from '../../utils/selectOptions';
 import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
 import { useHistory } from 'react-router-dom';
+import { useStore } from '../../components/storeProvider/StoreProvider';
 
-const CardIncome = ({ onHandleSubmit }) => {
+const CardIncome = () => {
   const history = useHistory();
   const cardId = 'income';
   const [date, setDate] = useState(moment(Date.now()).format('YYYY-MM-DD'));
@@ -15,7 +16,7 @@ const CardIncome = ({ onHandleSubmit }) => {
   const [income, setIncome] = useState(incomeSets.options[0].value);
   const [total, setTotal] = useState('');
   const [currency, setCurrency] = useState(currencySets.options[0].value);
-
+  const { onHandleSubmit } = useStore();
   const onHandleChange = e => {
     const { name, value } = e.target;
     switch (name) {

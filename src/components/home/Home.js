@@ -1,18 +1,18 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import CountTotal from '../../utils/countTotal';
 import Button from '../shared/button/Button';
 import Section from '../shared/section/Section';
+import { useStore } from '../storeProvider/StoreProvider';
 
-const Home = ({ spending, income }) => {
+const Home = () => {
   const history = useHistory();
   const counter = new CountTotal();
   const goToSpending = () => history.push('/spending');
   const goToIncome = () => history.push('/income');
   const goToListIncome = () => history.push('/list/income');
   const goToListOutlay = () => history.push('/list/outlay');
-
+  const { spendData: spending, incomeData: income } = useStore();
   return (
     <Section>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
