@@ -1,75 +1,78 @@
-export const outlaySets = {
-  title: 'Категория расходов',
-  name: 'outlay',
-  options: [
-    {
-      value: 'food',
-      title: 'Еда',
-    },
-    {
-      value: 'beverages',
-      title: 'Напитки',
-    },
-    {
-      value: 'clothes',
-      title: 'Одежда',
-    },
-  ],
+const selectOptions = {
+  outlaySets: {
+    title: 'Категория расходов',
+    name: 'outlay',
+    options: [
+      {
+        value: 'food',
+        title: 'Еда',
+      },
+      {
+        value: 'beverages',
+        title: 'Напитки',
+      },
+      {
+        value: 'clothes',
+        title: 'Одежда',
+      },
+    ],
+  },
+  incomeSets: {
+    title: 'Категория доходов',
+    name: 'income',
+    options: [
+      {
+        value: 'salary',
+        title: 'Зарплата',
+      },
+      {
+        value: 'deposit',
+        title: 'Депозит',
+      },
+      {
+        value: 'lottery',
+        title: 'Лотерея',
+      },
+    ],
+  },
+  currencySets: {
+    title: 'Валюта',
+    name: 'currency',
+    options: [
+      {
+        value: 'rub',
+        title: 'RUB',
+      },
+      {
+        value: 'usd',
+        title: 'USD',
+      },
+      {
+        value: 'hrn',
+        title: 'HRN',
+      },
+    ],
+  },
+  spendingList: {
+    name: 'spendingList',
+    options: [
+      {
+        value: 'month',
+        title: 'Месяц',
+      },
+      {
+        value: 'day',
+        title: 'День',
+      },
+      {
+        value: 'week',
+        title: 'Неделя',
+      },
+      {
+        value: 'year',
+        title: 'Год',
+      },
+    ],
+  },
 };
-export const incomeSets = {
-  title: 'Категория доходов',
-  name: 'income',
-  options: [
-    {
-      value: 'salary',
-      title: 'Зарплата',
-    },
-    {
-      value: 'deposit',
-      title: 'Депозит',
-    },
-    {
-      value: 'lottery',
-      title: 'Лотерея',
-    },
-  ],
-};
-export const currencySets = {
-  title: 'Валюта',
-  name: 'currency',
-  options: [
-    {
-      value: 'rub',
-      title: 'RUB',
-    },
-    {
-      value: 'usd',
-      title: 'USD',
-    },
-    {
-      value: 'hrn',
-      title: 'HRN',
-    },
-  ],
-};
-export const spendingList = {
-  name: 'spendingList',
-  options: [
-    {
-      value: 'day',
-      title: 'День',
-    },
-    {
-      value: 'week',
-      title: 'Неделя',
-    },
-    {
-      value: 'month',
-      title: 'Месяц',
-    },
-    {
-      value: 'year',
-      title: 'Год',
-    },
-  ],
-};
+export default selectOptions;

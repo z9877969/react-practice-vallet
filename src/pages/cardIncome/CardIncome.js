@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Form } from '../../components/shared/form/Form';
 import { Input } from '../../components/shared/input/Input';
 import { Select } from '../../components/shared/select/Select';
-import { incomeSets, currencySets } from '../../utils/selectOptions';
+import selectOptions from '../../utils/selectOptions';
 import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '../../components/storeProvider/StoreProvider';
+
+const { incomeSets, currencySets } = selectOptions;
 
 const CardIncome = () => {
   const history = useHistory();

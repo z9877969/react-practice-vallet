@@ -1,3 +1,4 @@
+import moment from 'moment';
 export const categoryResult = (data, cat) => {
   const uniqueCategory = data.map(item => item[cat]).filter((el, index, array) => array.indexOf(el) === index);
   return uniqueCategory
@@ -5,9 +6,40 @@ export const categoryResult = (data, cat) => {
       data
         .filter(el => el[cat] === category)
         .reduce((acc, obj) => {
+          console.log(obj);
           const total = Number(obj.total);
           return { category, total: acc.total ? acc.total + total : total };
         }, {}),
     )
     .filter(category => category.total > 0);
+};
+export const calculatePeriod = (date, select, cb) => {
+  switch (select) {
+    case 'day':
+      cb(moment(date).format('DD MMMM YYYY'));
+      break;
+    case 'week':
+      const dayOfWeek = moment(date).isoWeekday();
+      const start = moment(date)
+        .subtract(dayOfWeek - 1, 'days')
+        .format('DD MMMM YYYY');
+      const finish = moment(date)
+        .add(7 - dayOfWeek, 'days')
+        .format('DD MMMM YYYY');
+      cb(`${start} - ${finish}`);
+      break;
+    case 'month':
+      cb(moment(date).format('MMMM YYYY'));
+      break;
+    case 'year':
+      cb(moment(date).format('YYYY'));
+      break;
+
+    default:
+      break;
+  }
+};
+export const searchCategoryName = (category, item, options) => {
+  const optionsArr = Object.entries(options);
+  return optionsArr.find(([key]) => key.includes(category))[1].options.find(el => el.value === item).title;
 };

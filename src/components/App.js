@@ -6,6 +6,7 @@ import DataList from '../pages/dataList/DataList';
 
 import RouteWrapper from './routeWrapper/RouteWrapper';
 import { useStore } from './storeProvider/StoreProvider';
+import CategoryList from './categoryList/CategoryList';
 const App = () => {
   const { error } = useStore();
   return (
@@ -24,6 +25,9 @@ const App = () => {
 
           <RouteWrapper path="/income">
             <CardIncome />
+          </RouteWrapper>
+          <RouteWrapper path="/list/:category/:category">
+            <CategoryList />
           </RouteWrapper>
 
           <RouteWrapper path="/list/:category">
