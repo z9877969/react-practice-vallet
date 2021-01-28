@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import moment from 'moment';
 import Button from '../../components/shared/button/Button';
@@ -12,10 +12,14 @@ import DataListItem from '../../components/dataListIem/DataListItem';
 
 const { spendingList } = selectOptions;
 
+const DateContext = createContext();
+const DateProvider = DateContext.Provider;
+export const useDate = () => useContext(DateContext);
+
 const DataList = () => {
   const history = useHistory();
   const match = useRouteMatch();
-  const { spendData, incomeData } = useStore();
+  const { spendData, incomeData, getPeriod } = useStore();
   const [period, setPeriod] = useState('');
   const [select, setSelect] = useState('month');
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
@@ -33,6 +37,7 @@ const DataList = () => {
 
   useEffect(() => {
     calculatePeriod(date, select, setPeriod);
+    getPeriod({ date: date, period: select });
   }, [select, date]);
   return (
     <Section>
@@ -45,11 +50,13 @@ const DataList = () => {
       {period && <h2>{period}</h2>}
       <Button title="Right" />
       <h2>Всего: 0.00</h2>
-      <ul>
-        {categoriesList.map(item => (
-          <DataListItem key={item.category} item={item} />
-        ))}
-      </ul>
+      <DateProvider value={date}>
+        <ul>
+          {categoriesList.map(item => (
+            <DataListItem key={item.category} item={item} period={period} />
+          ))}
+        </ul>
+      </DateProvider>
     </Section>
   );
 };

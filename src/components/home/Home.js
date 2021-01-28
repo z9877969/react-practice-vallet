@@ -7,21 +7,22 @@ import { useStore } from '../storeProvider/StoreProvider';
 
 const Home = () => {
   const history = useHistory();
-  const counter = new CountTotal();
+  const { getDayPeriod, getWeekPeriod, getMonthPeriod, countTotal } = new CountTotal();
   const goToSpending = () => history.push('/spending');
   const goToIncome = () => history.push('/income');
   const goToListIncome = () => history.push('/list/income');
   const goToListOutlay = () => history.push('/list/outlay');
   const { spendData: spending, incomeData: income } = useStore();
+
   return (
     <Section>
       <div style={{ width: 'max-content', margin: '0 auto', border: '1px solid navy' }}>
         <h2>Расходы</h2>
         <p>RUB</p>
         <ul>
-          <li>Сегодня: {counter.countDayTotal(spending)}</li>
-          <li>Неделя: {counter.countWeekTotal(spending)}</li>
-          <li>Месяц: {counter.countMonthTotal(spending)}</li>
+          <li>Сегодня: {countTotal(getDayPeriod(spending))}</li>
+          <li>Неделя: {countTotal(getWeekPeriod(spending))}</li>
+          <li>Месяц: {countTotal(getMonthPeriod(spending))}</li>
         </ul>
         <Button onClick={goToSpending} title="+" />
       </div>
@@ -29,7 +30,7 @@ const Home = () => {
         <h2>Доходы</h2>
         <p>RUB</p>
         <ul>
-          <li>Месяц: {counter.countMonthTotal(income)}</li>
+          <li>Месяц: {countTotal(getMonthPeriod(income))}</li>
         </ul>
         <Button onClick={goToIncome} title="+" />
       </div>

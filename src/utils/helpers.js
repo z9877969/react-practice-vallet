@@ -6,7 +6,6 @@ export const categoryResult = (data, cat) => {
       data
         .filter(el => el[cat] === category)
         .reduce((acc, obj) => {
-          console.log(obj);
           const total = Number(obj.total);
           return { category, total: acc.total ? acc.total + total : total };
         }, {}),

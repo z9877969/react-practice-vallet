@@ -1,12 +1,17 @@
 import Button from '../shared/button/Button';
 
-const CategoryItem = () => {
+const CategoryItem = ({ item, goToEdit }) => {
+  const { id, date, total, currency } = item;
+  const onEditClick = () => {
+    goToEdit(id);
+    console.log('id', id);
+  };
   return (
     <li>
-      <span>Date</span>
+      <span>{date}</span>
       <span>Comment</span>
-      <span>Sum</span>
-      <Button title="Edit" />
+      <span>{`${total} ${currency}`}</span>
+      <Button title="Edit" onClick={onEditClick} />
     </li>
   );
 };

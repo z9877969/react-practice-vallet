@@ -19,8 +19,16 @@ const App = () => {
             <Home />
           </RouteWrapper>
 
+          <RouteWrapper path="/spending/:id">
+            <CardSpendings />
+          </RouteWrapper>
+
           <RouteWrapper path="/spending">
             <CardSpendings />
+          </RouteWrapper>
+
+          <RouteWrapper path="/income/:id">
+            <CardIncome />
           </RouteWrapper>
 
           <RouteWrapper path="/income">
