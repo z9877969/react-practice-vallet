@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from '../../components/shared/form/Form';
 import { Input } from '../../components/shared/input/Input';
 import { Select } from '../../components/shared/select/Select';
@@ -7,17 +7,25 @@ import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '../../components/storeProvider/StoreProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategory, getItemId } from '../../redux/activeCard/selectorsActiveCard';
+import { setCategory } from '../../redux/activeCard/actionActiveCard';
+import { findIncome } from '../../redux/dataLists/selectorsDataLists';
 
 const { incomeSets, currencySets } = selectOptions;
 
 const CardIncome = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const cardId = 'income';
-  const [date, setDate] = useState(moment(Date.now()).format('YYYY-MM-DD'));
-  const [time, setTime] = useState(moment(Date.now()).format('HH:mm'));
-  const [income, setIncome] = useState(incomeSets.options[0].value);
-  const [total, setTotal] = useState('');
-  const [currency, setCurrency] = useState(currencySets.options[0].value);
+  const id = useSelector(getItemId);
+  const cardId = useSelector(getCategory);
+  // const cardId = 'income';
+  const cardData = useSelector(findIncome);
+  const [date, setDate] = useState(cardData ? cardData.date : moment(Date.now()).format('YYYY-MM-DD'));
+  const [time, setTime] = useState(cardData ? cardData.time : moment(Date.now()).format('HH:mm'));
+  const [income, setIncome] = useState(cardData ? cardData.income : incomeSets.options[0].value);
+  const [total, setTotal] = useState(cardData ? cardData.total : '');
+  const [currency, setCurrency] = useState(cardData ? cardData.currency : currencySets.options[0].value);
   const { onHandleSubmit } = useStore();
   const onHandleChange = e => {
     const { name, value } = e.target;
@@ -42,6 +50,10 @@ const CardIncome = () => {
     onHandleSubmit({ key: cardId, data });
     history.push({ pathname: '/' });
   };
+  useEffect(() => {
+    dispatch(setCategory('income'));
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>

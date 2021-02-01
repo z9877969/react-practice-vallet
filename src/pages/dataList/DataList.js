@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import Button from '../../components/shared/button/Button';
 import Section from '../../components/shared/section/Section';
@@ -9,6 +10,7 @@ import { Input } from '../../components/shared/input/Input';
 import { calculatePeriod, categoryResult } from '../../utils/helpers';
 import { useStore } from '../../components/storeProvider/StoreProvider';
 import DataListItem from '../../components/dataListIem/DataListItem';
+import { getIncome, getSpending } from '../../redux/dataLists/selectorsDataLists';
 
 const { spendingList } = selectOptions;
 
@@ -19,7 +21,9 @@ export const useDate = () => useContext(DateContext);
 const DataList = () => {
   const history = useHistory();
   const match = useRouteMatch();
-  const { spendData, incomeData, getPeriod } = useStore();
+  const incomeData = useSelector(getIncome);
+  const spendData = useSelector(getSpending);
+  const { getPeriod } = useStore();
   const [period, setPeriod] = useState('');
   const [select, setSelect] = useState('month');
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
@@ -38,6 +42,7 @@ const DataList = () => {
   useEffect(() => {
     calculatePeriod(date, select, setPeriod);
     getPeriod({ date: date, period: select });
+    // eslint-disable-next-line
   }, [select, date]);
   return (
     <Section>

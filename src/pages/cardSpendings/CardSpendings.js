@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form } from '../../components/shared/form/Form';
 import { Input } from '../../components/shared/input/Input';
 import { Select } from '../../components/shared/select/Select';
 import selectOptions from '../../utils/selectOptions';
 import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useStore } from '../../components/storeProvider/StoreProvider';
+import { getCategory, getItemId } from '../../redux/activeCard/selectorsActiveCard';
+import { setCategory } from '../../redux/activeCard/actionActiveCard';
+import { findSpending } from '../../redux/dataLists/selectorsDataLists';
 
 const { outlaySets, currencySets } = selectOptions;
 
 const CardSpendings = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { params } = useRouteMatch();
+  const id = useSelector(getItemId);
   const { onHandleSubmit, getCardData } = useStore();
-  const cardId = 'spending';
-  console.log(params.id);
-  const cardData = params.id ? getCardData({ id: params.id, category: cardId }) : null;
-  console.log('cardData', getCardData({ id: cardId, category: params.id }));
+  const cardId = useSelector(getCategory);
+  // const cardId = 'spending';
+  console.log(id);
+  const cardData = useSelector(findSpending);
+  console.log('cardData', getCardData({ category: cardId }));
   const [date, setDate] = useState(cardData ? cardData.date : moment(Date.now()).format('YYYY-MM-DD'));
   const [time, setTime] = useState(cardData ? cardData.time : moment(Date.now()).format('HH:mm'));
   const [outlay, setOutlay] = useState(cardData ? cardData.outlay : outlaySets.options[0].value);
@@ -46,6 +53,12 @@ const CardSpendings = () => {
     onHandleSubmit({ key: cardId, data });
     history.push({ pathname: '/' });
   };
+
+  useEffect(() => {
+    dispatch(setCategory('spending'));
+    // eslint-disable-next-line
+  }, []);
+  // useEffect(() => {}, [id]);
 
   return (
     <div>

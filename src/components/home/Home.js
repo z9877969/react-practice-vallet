@@ -1,18 +1,20 @@
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import CountTotal from '../../utils/countTotal';
 import Button from '../shared/button/Button';
 import Section from '../shared/section/Section';
-import { useStore } from '../storeProvider/StoreProvider';
+import { getIncome, getSpending } from '../../redux/dataLists/selectorsDataLists';
 
 const Home = () => {
+  const income = useSelector(getIncome);
+  const spending = useSelector(getSpending);
   const history = useHistory();
   const { getDayPeriod, getWeekPeriod, getMonthPeriod, countTotal } = new CountTotal();
   const goToSpending = () => history.push('/spending');
   const goToIncome = () => history.push('/income');
   const goToListIncome = () => history.push('/list/income');
   const goToListOutlay = () => history.push('/list/outlay');
-  const { spendData: spending, incomeData: income } = useStore();
 
   return (
     <Section>

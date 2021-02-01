@@ -1,5 +1,6 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import CategoryItem from '../categoryItem/CategoryItem';
 import List from '../shared/list/List';
@@ -9,12 +10,13 @@ import CountTotal from '../../utils/countTotal';
 
 import { useStore } from '../storeProvider/StoreProvider';
 import Button from '../shared/button/Button';
+import { getIncome, getSpending } from '../../redux/dataLists/selectorsDataLists';
 
 const CategoryList = () => {
+  const incomeData = useSelector(getIncome);
+  const spendData = useSelector(getSpending);
   const {
     period: { date, period },
-    spendData,
-    incomeData,
   } = useStore();
   const { getDayPeriod, getWeekPeriod, getMonthPeriod } = new CountTotal();
   const [list, setList] = useState([]);
