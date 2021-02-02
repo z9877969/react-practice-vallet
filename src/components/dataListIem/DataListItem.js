@@ -24,6 +24,7 @@ const DataListItem = ({ item, period }) => {
     const result = searchCategoryName(match.params.category, category, selectOptions);
     setCat(result);
   };
+  
   useEffect(() => {
     getGategory();
 

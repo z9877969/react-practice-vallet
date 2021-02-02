@@ -25,7 +25,7 @@ const CardSpendings = () => {
   // const cardId = 'spending';
   console.log(id);
   const cardData = useSelector(findSpending);
-  console.log('cardData', getCardData({ category: cardId }));
+  
   const [date, setDate] = useState(cardData ? cardData.date : moment(Date.now()).format('YYYY-MM-DD'));
   const [time, setTime] = useState(cardData ? cardData.time : moment(Date.now()).format('HH:mm'));
   // const [outlay, setOutlay] = useState('clothes');

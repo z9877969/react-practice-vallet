@@ -100,7 +100,7 @@
       "date": "2021-02-01",
       "time": "17:49",
       "outlay": "food",
-      "total": "",
+      "total": "126",
       "currency": "rub",
       "id": 13
     },
@@ -108,9 +108,17 @@
       "date": "2021-02-02",
       "time": "16:13",
       "outlay": "food",
-      "total": "321321",
+      "total": "320",
       "currency": "rub",
       "id": 14
+    },
+    {
+      "date": "2021-02-02",
+      "time": "20:31",
+      "outlay": "beverages",
+      "total": "150",
+      "currency": "rub",
+      "id": 15
     }
   ],
   "income": [
@@ -169,6 +177,38 @@
       "total": "9999",
       "currency": "rub",
       "id": 7
+    },
+    {
+      "date": "2021-02-02",
+      "time": "20:08",
+      "income": "deposit",
+      "total": "555",
+      "currency": "rub",
+      "id": 8
+    },
+    {
+      "date": "2021-02-02",
+      "time": "20:18",
+      "income": "salary",
+      "total": "555",
+      "currency": "rub",
+      "id": 9
+    },
+    {
+      "date": "2021-02-01",
+      "time": "20:18",
+      "income": "lottery",
+      "total": "1000",
+      "currency": "rub",
+      "id": 10
+    },
+    {
+      "date": "2021-02-02",
+      "time": "20:31",
+      "income": "lottery",
+      "total": "1500",
+      "currency": "rub",
+      "id": 11
     }
   ]
 }

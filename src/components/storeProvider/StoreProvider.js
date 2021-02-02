@@ -57,7 +57,6 @@ const StoreProvider = ({ children }) => {
   const getPeriod = ({ date, period }) => setPeriod({ date, period });
 
   const getCardData = ({ category }) => {
-    console.log(category === 'spending');
     if (category === 'spending') return spendingItem;
     if (category === 'income') return incomeItem;
   };
