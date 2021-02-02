@@ -103,6 +103,14 @@
       "total": "",
       "currency": "rub",
       "id": 13
+    },
+    {
+      "date": "2021-02-02",
+      "time": "16:13",
+      "outlay": "food",
+      "total": "321321",
+      "currency": "rub",
+      "id": 14
     }
   ],
   "income": [
