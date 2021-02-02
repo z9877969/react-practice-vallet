@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form } from '../../components/shared/form/Form';
 import { Input } from '../../components/shared/input/Input';
@@ -9,7 +9,7 @@ import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
 import { useStore } from '../../components/storeProvider/StoreProvider';
 import { getCategory, getItemId } from '../../redux/activeCard/selectorsActiveCard';
-import { setCategory } from '../../redux/activeCard/actionActiveCard';
+import { resetItemId, setCategory } from '../../redux/activeCard/actionActiveCard';
 import { findSpending } from '../../redux/dataLists/selectorsDataLists';
 
 const { outlaySets, currencySets } = selectOptions;
@@ -17,6 +17,7 @@ const { outlaySets, currencySets } = selectOptions;
 const CardSpendings = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { state } = useLocation();
   const { params } = useRouteMatch();
   const id = useSelector(getItemId);
   const { onHandleSubmit, getCardData } = useStore();
@@ -27,6 +28,7 @@ const CardSpendings = () => {
   console.log('cardData', getCardData({ category: cardId }));
   const [date, setDate] = useState(cardData ? cardData.date : moment(Date.now()).format('YYYY-MM-DD'));
   const [time, setTime] = useState(cardData ? cardData.time : moment(Date.now()).format('HH:mm'));
+  // const [outlay, setOutlay] = useState('clothes');
   const [outlay, setOutlay] = useState(cardData ? cardData.outlay : outlaySets.options[0].value);
   const [total, setTotal] = useState(cardData ? cardData.total : '');
   const [currency, setCurrency] = useState(cardData ? cardData.currency : currencySets.options[0].value);
@@ -50,8 +52,8 @@ const CardSpendings = () => {
   const onFormSubmit = e => {
     e.preventDefault();
     const data = { date, time, outlay, total, currency };
-    onHandleSubmit({ key: cardId, data });
-    history.push({ pathname: '/' });
+    onHandleSubmit({ key: cardId, data, id: id ? id : null });
+    id ? history.push({ pathname: state.from, state: state.data }) : history.push('/');
   };
 
   useEffect(() => {

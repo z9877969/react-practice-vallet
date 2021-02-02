@@ -5,11 +5,11 @@ import { Select } from '../../components/shared/select/Select';
 import selectOptions from '../../utils/selectOptions';
 import moment from 'moment';
 import CardTitle from '../../components/shared/cardTitle/CardTitle';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useStore } from '../../components/storeProvider/StoreProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory, getItemId } from '../../redux/activeCard/selectorsActiveCard';
-import { setCategory } from '../../redux/activeCard/actionActiveCard';
+import { resetItemId, setCategory } from '../../redux/activeCard/actionActiveCard';
 import { findIncome } from '../../redux/dataLists/selectorsDataLists';
 
 const { incomeSets, currencySets } = selectOptions;
@@ -17,6 +17,7 @@ const { incomeSets, currencySets } = selectOptions;
 const CardIncome = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { state } = useLocation();
   const id = useSelector(getItemId);
   const cardId = useSelector(getCategory);
   // const cardId = 'income';
@@ -47,8 +48,8 @@ const CardIncome = () => {
   const onFormSubmit = e => {
     e.preventDefault();
     const data = { date, time, income, total, currency };
-    onHandleSubmit({ key: cardId, data });
-    history.push({ pathname: '/' });
+    onHandleSubmit({ key: cardId, data, id: id ? id : null });
+    id ? history.push({ pathname: state.from, state: state.data }) : history.push('/');
   };
   useEffect(() => {
     dispatch(setCategory('income'));
@@ -58,7 +59,7 @@ const CardIncome = () => {
   return (
     <div>
       <Form onHandleSubmit={onFormSubmit}>
-        <CardTitle title="Расходы" />
+        <CardTitle title="Доходы" />
         <Input title="День" onChange={onHandleChange} type="date" value={date} name="date" />
         <Input title="Время" onChange={onHandleChange} type="time" value={time} name="time" />
         <Select value={income} onChange={onHandleChange} sets={incomeSets} />

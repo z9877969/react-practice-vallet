@@ -2,8 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import ApiServicesClass from '../../services/apiServicesClass';
-import { addIncome, addSpending, getIncomeData, getSpendingData } from '../../redux/dataLists/actionDataLists';
+import { addIncome, addSpending, getIncomeData, getSpendingData, updateIncome, updateSpending } from '../../redux/dataLists/actionDataLists';
 import { findIncome, findSpending } from '../../redux/dataLists/selectorsDataLists';
+import { resetItemId } from '../../redux/activeCard/actionActiveCard';
 
 const StoreContext = createContext();
 
@@ -22,19 +23,35 @@ const StoreProvider = ({ children }) => {
   const [period, setPeriod] = useState({});
   const api = new ApiServicesClass();
 
-  const onHandleSubmit = async ({ key, data }) => {
-    try {
-      const responseData = await api.post(key, data);
-      if (key === 'spending') {
-        dispatch(addSpending(responseData));
-        // setSpendData(prevState => [...prevState, responseData]);
-      } else if (key === 'income') {
-        dispatch(addIncome(responseData));
-        // setIncomeData(prevState => [...prevState, responseData]);
+  const onHandleSubmit = async ({ key, data, id = null }) => {
+    if (!id) {
+      try {
+        const responseData = await api.post(key, data);
+        if (key === 'spending') {
+          dispatch(addSpending(responseData));
+          // setSpendData(prevState => [...prevState, responseData]);
+        } else if (key === 'income') {
+          dispatch(addIncome(responseData));
+          // setIncomeData(prevState => [...prevState, responseData]);
+        }
+      } catch (error) {
+        setError(error);
       }
-    } catch (error) {
-      setError(error);
+    } else {
+      try {
+        const responseData = await api.patch(key, data, id);
+        if (key === 'spending') {
+          dispatch(updateSpending({ item: responseData, id }));
+          // setSpendData(prevState => [...prevState, responseData]);
+        } else if (key === 'income') {
+          dispatch(updateIncome({ item: responseData, id }));
+          // setIncomeData(prevState => [...prevState, responseData]);
+        }
+      } catch (error) {
+        setError(error);
+      }
     }
+    dispatch(resetItemId());
   };
 
   const getPeriod = ({ date, period }) => setPeriod({ date, period });

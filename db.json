@@ -92,7 +92,7 @@
       "date": "2021-01-30",
       "time": "18:53",
       "outlay": "clothes",
-      "total": "1111",
+      "total": "3333",
       "currency": "rub",
       "id": 12
     },
@@ -161,6 +161,14 @@
       "total": "1234",
       "currency": "rub",
       "id": 6
+    },
+    {
+      "date": "2021-01-25",
+      "time": "17:03",
+      "income": "deposit",
+      "total": "9999",
+      "currency": "rub",
+      "id": 7
     }
   ]
 }

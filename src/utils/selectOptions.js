@@ -53,8 +53,8 @@ const selectOptions = {
       },
     ],
   },
-  spendingList: {
-    name: 'spendingList',
+  periodList: {
+    name: 'periodList',
     options: [
       {
         value: 'month',

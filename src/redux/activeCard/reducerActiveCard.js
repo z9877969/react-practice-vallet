@@ -4,6 +4,8 @@ export const reducerActiveId = (state = '', { type, payload }) => {
   switch (type) {
     case ActionTypes.SET_ITEM_ID:
       return payload;
+    case ActionTypes.RESET_ITEM_ID:
+      return '';
 
     default:
       return state;
