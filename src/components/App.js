@@ -45,7 +45,6 @@ const App = () => {
           <Redirect to="/" />
         </Switch>
       )}
-      {/* {spendData.length > 0 &&  <SpendingList spendData={spendData} />} */}
     </>
   );
 };

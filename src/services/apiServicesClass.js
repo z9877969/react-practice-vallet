@@ -21,4 +21,10 @@ export default class ApiServicesClass {
       .then(response => response.data)
       .catch(error => error);
   }
+  patch(category, data, id) {
+    return axios
+      .patch(`${category}/${id}`, data)
+      .then(response => response.data)
+      .catch(error => error);
+  }
 }

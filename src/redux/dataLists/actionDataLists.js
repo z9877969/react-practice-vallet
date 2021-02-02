@@ -16,3 +16,11 @@ export const addSpending = item => ({
   type: ActionTypes.ADD_SPENDING_ITEM,
   payload: item,
 });
+export const updateIncome = ({ item, id }) => ({
+  type: ActionTypes.UPDATE_INCOME_ITEM,
+  payload: { item, id },
+});
+export const updateSpending = ({ item, id }) => ({
+  type: ActionTypes.UPDATE_SPENDING_ITEM,
+  payload: { item, id },
+});

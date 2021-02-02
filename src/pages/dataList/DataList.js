@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import Button from '../../components/shared/button/Button';
 import Section from '../../components/shared/section/Section';
@@ -8,60 +8,83 @@ import { Select } from '../../components/shared/select/Select';
 import selectOptions from '../../utils/selectOptions';
 import { Input } from '../../components/shared/input/Input';
 import { calculatePeriod, categoryResult } from '../../utils/helpers';
-import { useStore } from '../../components/storeProvider/StoreProvider';
+
 import DataListItem from '../../components/dataListIem/DataListItem';
 import { getIncome, getSpending } from '../../redux/dataLists/selectorsDataLists';
+import { getDate, getPeriod } from '../../redux/sets/selectorSets';
+import { setDate, setPeriod } from '../../redux/sets/actionSets';
+import ApiServicesClass from '../../services/apiServicesClass';
 
-const { spendingList } = selectOptions;
-
-const DateContext = createContext();
-const DateProvider = DateContext.Provider;
-export const useDate = () => useContext(DateContext);
+const { periodList } = selectOptions;
+const api = new ApiServicesClass();
+const { getDayPeriod, getWeekPeriod, getMonthPeriod } = api;
 
 const DataList = () => {
   const history = useHistory();
   const match = useRouteMatch();
+  const dispatch = useDispatch();
   const incomeData = useSelector(getIncome);
   const spendData = useSelector(getSpending);
-  const { getPeriod } = useStore();
-  const [period, setPeriod] = useState('');
-  const [select, setSelect] = useState('month');
-  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const date = useSelector(getDate);
+  const period = useSelector(getPeriod);
+
+  const [periodStr, setPeriodStr] = useState('');
+  const [list, setList] = useState([]);
+
   const onHandleDate = e => {
-    setDate(e.target.value);
+    dispatch(setDate(e.target.value));
   };
   const goBack = () => history.push('/');
   const { category } = match.params;
   const categoriesList =
     category === 'income' ? categoryResult(incomeData, category) : category === 'outlay' ? categoryResult(spendData, category) : null;
-  const onHandleSelect = e => {
+  const onHandlePeriod = e => {
     const result = e.target.value;
-    setSelect(result);
+    dispatch(setPeriod(result));
   };
 
   useEffect(() => {
-    calculatePeriod(date, select, setPeriod);
-    getPeriod({ date: date, period: select });
+    calculatePeriod(date, period, setPeriodStr);
+    // console.log(categoriesList);
+    // if (categoriesList) {
+    //   const arrByCategory = categoriesList.filter(
+    //     item => item[category === 'outlay' ? 'outlay' : category === 'income' ? 'income' : ''] === match.params.category,
+    //   );
+    //   switch (period) {
+    //     case 'day':
+    //       setList(getDayPeriod(arrByCategory, date));
+    //       break;
+    //     case 'week':
+    //       setList(getWeekPeriod(arrByCategory, date));
+    //       return;
+    //     case 'month':
+    //       setList(getMonthPeriod(arrByCategory, date));
+    //       break;
+    //     case 'year':
+    //       console.log(arrByCategory, date);
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
     // eslint-disable-next-line
-  }, [select, date]);
+  }, [period, date]);
   return (
     <Section>
       <header>
         <Button title="Go back" onClick={goBack} />
-        <Select value={select} sets={spendingList} onChange={onHandleSelect} />
+        <Select value={period} sets={periodList} onChange={onHandlePeriod} />
       </header>
       <Button title="Left" />
       <Input type="date" name="date" value={date} onChange={onHandleDate} />
-      {period && <h2>{period}</h2>}
+      {periodStr && <h2>{periodStr}</h2>}
       <Button title="Right" />
       <h2>Всего: 0.00</h2>
-      <DateProvider value={date}>
-        <ul>
-          {categoriesList.map(item => (
-            <DataListItem key={item.category} item={item} period={period} />
-          ))}
-        </ul>
-      </DateProvider>
+      <ul>
+        {categoriesList.map(item => (
+          <DataListItem key={item.category} item={item} period={periodStr} />
+        ))}
+      </ul>
     </Section>
   );
 };
