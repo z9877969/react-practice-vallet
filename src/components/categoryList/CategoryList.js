@@ -15,6 +15,7 @@ import {
   getSpending,
 } from "../../redux/dataLists/selectorsDataLists";
 import { getDate, getPeriod } from "../../redux/sets/selectorSets";
+import { OutlinedInput } from "@material-ui/core";
 
 const CategoryList = () => {
   const location = useLocation();
@@ -84,7 +85,7 @@ const CategoryList = () => {
   }, [dataArr]);
   return (
     <Section>
-      <Button title="Go back" onClick={onGoBack} />
+      <Button title="Go back" onClick={onGoBack} stylesUi={{variant: "outlined", color: "default"}}/>
       <Title title={`${locationState.category} ${locationState.period}`} />
       <List>
         {list.map((item) => (

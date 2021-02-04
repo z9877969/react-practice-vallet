@@ -119,6 +119,14 @@
       "total": "150",
       "currency": "rub",
       "id": 15
+    },
+    {
+      "date": "2021-02-03",
+      "time": "02:43",
+      "outlay": "food",
+      "total": "54",
+      "currency": "rub",
+      "id": 16
     }
   ],
   "income": [
@@ -209,6 +217,14 @@
       "total": "1500",
       "currency": "rub",
       "id": 11
+    },
+    {
+      "date": "2021-02-03",
+      "time": "02:43",
+      "income": "salary",
+      "total": "555",
+      "currency": "rub",
+      "id": 12
     }
   ]
 }
